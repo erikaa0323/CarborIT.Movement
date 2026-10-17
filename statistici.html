@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <title>Statistici | CarbonIt Green Map</title>
+  <style>
+    :root {
+      --bg: #071b17;
+      --panel: #102c25;
+      --border: #245143;
+      --text: #effff6;
+      --muted: #b0c9bd;
+      --green: #38d995;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 22px 6%;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--green);
+    }
+
+    a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 35px 20px 60px;
+    }
+
+    h1 { margin-bottom: 8px; }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .value {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--green);
+      margin-top: 10px;
+    }
+
+    section {
+      margin-top: 25px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    section h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    .chart-row {
+      margin: 15px 0;
+    }
+
+    .chart-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .track {
+      height: 13px;
+      background: #25483d;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0;
+      background: var(--green);
+      border-radius: 20px;
+      transition: width .4s;
+    }
+
+    .muted { color: var(--muted); }
+
+    .notice {
+      padding: 15px;
+      background: #17382e;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+    }
+
+    button {
+      background: var(--green);
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">🌱 CarbonIt | Green Map</div>
+    <nav>
+      <a href="./index.html">← Înapoi la hartă</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Statistici CarbonIt</h1>
+
+    <p class="intro">
+      Cum se deplasează elevii din Iași și
+      ce îmbunătățiri își doresc.
+      Statisticile sunt afișate doar agregat.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="label">Răspunsuri totale</div>
+        <div class="value" id="total">—</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Răspunsuri eligibile</div>
+        <div class="value" id="students">—</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Ultima actualizare</div>
+        <div class="value"
+             id="updated"
+             style="font-size:18px">—</div>
+      </div>
+    </div>
+
+    <div class="notice" id="status">
+      Se pregătește conectarea la API-ul
+      agregat CarbonIt.
+    </div>
+
+    <section>
+      <h2>🚶 Mijloace de transport</h2>
+      <p class="muted">
+        Numărul de zile raportate pentru fiecare
+        mijloc de transport.
+      </p>
+      <div id="transportChart"></div>
+    </section>
+
+    <section>
+      <h2>⏱️ Durata deplasărilor</h2>
+      <div id="timeChart"></div>
+    </section>
+
+    <section>
+      <h2>💡 Îmbunătățiri dorite</h2>
+      <div id="helpChart"></div>
+    </section>
+
+    <section>
+      <h2>📍 Zone aglomerate</h2>
+      <div id="zones">
+        <p class="muted">
+          Zonele agregate vor apărea aici
+          după conectarea API-ului.
+        </p>
+      </div>
+    </section>
+
+    <p style="margin-top:25px">
+      <button id="refresh">
+        Actualizează statisticile
+      </button>
+    </p>
+  </main>
+
+  <footer>
+    CarbonIt Movement · Green Map Iași
+  </footer>
+
+  <script>
+    'use strict';
+
+    // Înlocuim această adresă când API-ul
+    // agregat este disponibil.
+    const API_URL =
+      'https://carbonit.datastream.ro/api/public-summary';
+
+    const labels = {
+      foot: 'Mers pe jos',
+      bike: 'Bicicletă',
+      public: 'Transport public',
+      car: 'Mașină',
+      taxi: 'Taxi',
+      other: 'Altele',
+      sub15: 'Sub 15 minute',
+      '15-20': '15–20 minute',
+      '20-30': '20–30 minute',
+      peste30: 'Peste 30 minute',
+      rute: 'Rute mai bune',
+      info: 'Informații despre transport',
+      altceva: 'Alte îmbunătățiri'
+    };
+
+    function chart(id, data) {
+      const root = document.getElementById(id);
+      root.replaceChildren();
+
+      const entries = Object.entries(data || {})
+        .filter(([, value]) =>
+          typeof value === 'number' &&
+          Number.isFinite(value) &&
+          value >= 0
+        );
+
+      const max = Math.max(
+        1,
+        ...entries.map(([, value]) => value)
+      );
+
+      if (!entries.length) {
+        root.textContent = 'Nu există date disponibile.';
+        return;
+      }
+
+      for (const [key, value] of entries) {
+        const row = document.createElement('div');
+        row.className = 'chart-row';
+
+        const title = document.createElement('div');
+        title.className = 'chart-label';
+
+        const name = document.createElement('span');
+        name.textContent = labels[key] || key;
+
+        const count = document.createElement('strong');
+        count.textContent = value;
+
+        title.append(name, count);
+
+        const track = document.createElement('div');
+        track.className = 'track';
+
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.width =
+          (value / max * 100) + '%';
+
+        track.appendChild(bar);
+        row.append(title, track);
+        root.appendChild(row);
+      }
+    }
+
+    function showZones(zones) {
+      const root = document.getElementById('zones');
+      root.replaceChildren();
+
+      if (!Array.isArray(zones) || !zones.length) {
+        root.textContent =
+          'Nu există zone agregate disponibile.';
+        return;
+      }
+
+      for (const zone of zones) {
+        const item = document.createElement('p');
+        item.className = 'muted';
+
+        const name =
+          typeof zone.name === 'string'
+            ? zone.name
+            : 'Zonă';
+
+        const count =
+          Number.isFinite(zone.responses)
+            ? ' · ' + zone.responses + ' mențiuni'
+            : '';
+
+        item.textContent = name + count;
+        root.appendChild(item);
+      }
+    }
+
+    async function loadStats() {
+      const status =
+        document.getElementById('status');
+
+      status.textContent =
+        'Se încarcă statisticile...';
+
+      try {
+        const response = await fetch(API_URL, {
+          cache: 'no-store',
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            'API indisponibil (' +
+            response.status + ')'
+          );
+        }
+
+        const data = await response.json();
+
+        if (
+          data.ok !== true ||
+          Array.isArray(data.responses) ||
+          !data.transport ||
+          !data.travelTime ||
+          !data.help
+        ) {
+          throw new Error(
+            'API-ul nu oferă formatul agregat necesar.'
+          );
+        }
+
+        document.getElementById('total')
+          .textContent =
+          data.totalResponses ?? '—';
+
+        document.getElementById('students')
+          .textContent =
+          data.studentResponses ?? '—';
+
+        document.getElementById('updated')
+          .textContent =
+          data.updatedAt
+            ? new Date(data.updatedAt)
+                .toLocaleString('ro-RO')
+            : '—';
+
+        chart('transportChart', data.transport);
+        chart('timeChart', data.travelTime);
+        chart('helpChart', data.help);
+
+        showZones(data.zones);
+
+        status.textContent =
+          'Statistici actualizate automat din CarbonIt.';
+      } catch (error) {
+        console.error(error);
+
+        status.textContent =
+          'Statisticile nu sunt încă disponibile. ' +
+          'Este necesar endpoint-ul agregat CarbonIt.';
+      }
+    }
+
+    document.getElementById('refresh')
+      .addEventListener('click', loadStats);
+
+    loadStats();
+
+    // Reîmprospătare la fiecare 5 minute.
+    setInterval(loadStats, 5 * 60 * 1000);
+  </script>
+</body>
+</html>
