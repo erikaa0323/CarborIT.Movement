@@ -3,225 +3,309 @@
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CarbonIt | Green Map Iași</title>
 
-<link rel="stylesheet"
- href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoQnN4sS4vD8k="
+  crossorigin=""
+>
 
 <style>
 :root {
-  --bg:#071b19;
-  --panel:#102a26;
-  --green:#8ce0b0;
-  --text:#f0f7f2;
-  --muted:#a8c0b7;
-  --border:#28473f;
+  --bg: #071b19;
+  --panel: #102a26;
+  --green: #8ce0b0;
+  --text: #f0f7f2;
+  --muted: #a8c0b7;
+  --border: #28473f;
 }
-* {box-sizing:border-box}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
 }
+
 header {
-  padding:22px 6%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:15px;
-  border-bottom:1px solid var(--border);
+  padding: 22px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  border-bottom: 1px solid var(--border);
 }
+
 .logo {
-  color:var(--green);
-  font-size:21px;
-  font-weight:bold;
+  color: var(--green);
+  font-size: 21px;
+  font-weight: bold;
 }
+
 nav a {
-  color:var(--muted);
-  text-decoration:none;
-  margin-right:15px;
-  font-size:14px;
+  color: var(--muted);
+  text-decoration: none;
+  margin-right: 15px;
+  font-size: 14px;
 }
-nav a:hover {color:var(--green)}
+
+nav a:hover {
+  color: var(--green);
+}
+
 main {
-  max-width:1250px;
-  margin:auto;
-  padding:40px 5%;
+  max-width: 1250px;
+  margin: auto;
+  padding: 40px 5%;
 }
+
 .eyebrow {
-  color:var(--green);
-  letter-spacing:2px;
-  font-size:12px;
-  text-transform:uppercase;
+  color: var(--green);
+  letter-spacing: 2px;
+  font-size: 12px;
+  text-transform: uppercase;
 }
+
 h1 {
-  font-size:clamp(34px,5vw,56px);
-  margin:15px 0;
+  font-size: clamp(34px, 5vw, 56px);
+  margin: 15px 0;
 }
-h2 {margin-top:0}
-h3 {font-size:16px;margin-top:25px}
+
+h2 {
+  margin-top: 0;
+}
+
+h3 {
+  font-size: 16px;
+  margin-top: 25px;
+}
+
 .intro {
-  color:var(--muted);
-  line-height:1.7;
-  max-width:720px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 720px;
 }
+
 .layout {
-  display:grid;
-  grid-template-columns:340px minmax(0,1fr);
-  gap:20px;
-  margin-top:30px;
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 20px;
+  margin-top: 30px;
 }
+
 .panel {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px;
-  min-width:0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  min-width: 0;
 }
+
 .panel p {
-  color:var(--muted);
-  line-height:1.6;
+  color: var(--muted);
+  line-height: 1.6;
 }
+
 label {
-  display:block;
-  margin:16px 0 8px;
-  font-size:14px;
+  display: block;
+  margin: 16px 0 8px;
+  font-size: 14px;
 }
-select,input,button {
-  width:100%;
-  padding:12px;
-  border-radius:9px;
-  font:inherit;
-}
-select,input {
-  background:#071b19;
-  color:white;
-  border:1px solid #426158;
-}
+
+select,
+input,
 button {
-  margin-top:12px;
-  border:0;
-  background:var(--green);
-  color:#09241b;
-  font-weight:bold;
-  cursor:pointer;
+  width: 100%;
+  padding: 12px;
+  border-radius: 9px;
+  font: inherit;
 }
-button:hover {filter:brightness(1.08)}
+
+select,
+input {
+  background: #071b19;
+  color: white;
+  border: 1px solid #426158;
+}
+
+button {
+  margin-top: 12px;
+  border: 0;
+  background: var(--green);
+  color: #09241b;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
 button:disabled {
-  opacity:.55;
-  cursor:wait;
+  opacity: 0.55;
+  cursor: wait;
 }
+
 .secondary {
-  background:#25483e;
-  color:white;
-  border:1px solid #426158;
+  background: #25483e;
+  color: white;
+  border: 1px solid #426158;
 }
-.danger {
-  background:#983e43;
-  color:white;
-}
-#map {
-  width:100%;
-  height:550px;
-  background:#dce5dd;
-  border-radius:12px;
-  z-index:0;
-}
-.note {
-  font-size:12px;
-  color:var(--muted);
-}
+
 .status {
-  padding:12px;
-  background:#071b19;
-  border-radius:9px;
-  margin-top:16px;
-  font-size:13px;
-  line-height:1.5;
+  padding: 12px;
+  background: #071b19;
+  border-radius: 9px;
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.5;
 }
+
 .stats {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;
-  margin-top:16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
 }
+
 .stat {
-  padding:13px 8px;
-  background:#071b19;
-  border:1px solid var(--border);
-  border-radius:10px;
-  text-align:center;
+  padding: 13px 8px;
+  background: #071b19;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-align: center;
 }
+
 .stat strong {
-  display:block;
-  color:var(--green);
-  font-size:19px;
-  overflow-wrap:anywhere;
+  display: block;
+  color: var(--green);
+  font-size: 19px;
+  overflow-wrap: anywhere;
 }
+
 .stat span {
-  font-size:11px;
-  color:var(--muted);
+  font-size: 11px;
+  color: var(--muted);
 }
+
+#map {
+  width: 100%;
+  height: 550px;
+  background: #dce5dd;
+  border-radius: 12px;
+  z-index: 0;
+}
+
 .legend {
-  display:flex;
-  gap:15px;
-  flex-wrap:wrap;
-  margin-top:15px;
-  font-size:12px;
-  color:var(--muted);
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  font-size: 12px;
+  color: var(--muted);
 }
+
 .dot {
-  display:inline-block;
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  margin-right:5px;
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
-.route-green {background:#16a34a}
-.route-blue {background:#3498db}
-.route-start {background:#20c997}
-.route-end {background:#e74c3c}
+
+.route-green {
+  background: #16a34a;
+}
+
+.route-blue {
+  background: #3498db;
+}
+
+.route-start {
+  background: #20c997;
+}
+
+.route-end {
+  background: #e74c3c;
+}
+
 .route-card {
-  margin-top:15px;
-  padding:14px;
-  background:#071b19;
-  border:1px solid var(--border);
-  border-radius:10px;
+  margin-top: 15px;
+  padding: 14px;
+  background: #071b19;
+  border: 1px solid var(--border);
+  border-radius: 10px;
 }
-.route-card strong {color:var(--green)}
-.route-card p {margin:8px 0;font-size:13px}
+
+.route-card strong {
+  color: var(--green);
+}
+
+.route-card p {
+  margin: 8px 0;
+  font-size: 13px;
+}
+
 .instructions {
-  max-height:250px;
-  overflow-y:auto;
-  padding-left:22px;
-  color:var(--muted);
-  line-height:1.7;
-  font-size:13px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-left: 22px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 13px;
 }
-.instructions li {margin-bottom:8px}
+
+.instructions li {
+  margin-bottom: 8px;
+}
+
+.note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
 footer {
-  border-top:1px solid var(--border);
-  padding:25px 6%;
-  color:var(--muted);
-  font-size:13px;
+  border-top: 1px solid var(--border);
+  padding: 25px 6%;
+  color: var(--muted);
+  font-size: 13px;
 }
-@media(max-width:800px) {
-  .layout {grid-template-columns:1fr}
-  #map {height:420px}
-  main {padding:30px 4%}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  #map {
+    height: 420px;
+  }
+
+  main {
+    padding: 30px 4%;
+  }
 }
-@media(max-width:420px) {
-  .stats {grid-template-columns:1fr 1fr}
+
+@media (max-width: 420px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <header>
   <div class="logo">CarbonIt · Iași</div>
+
   <nav>
     <a href="#harta">Green Map</a>
     <a href="#despre">Despre</a>
@@ -230,38 +314,57 @@ footer {
 </header>
 
 <main>
+
 <section>
   <div class="eyebrow">
     Mobilitate urbană · Mediu · Tehnologie
   </div>
+
   <h1>Descoperă un Iași mai verde.</h1>
+
   <p class="intro">
-    Planifică deplasări sustenabile prin Iași.
-    Compară trasee pietonale și pentru biciclete,
-    descoperă alternative și estimează emisiile
-    de CO₂ pe care le poți evita.
+    Planifică deplasări prin Iași folosind mașina,
+    bicicleta sau mersul pe jos. Compară trasee,
+    descoperă alternative sustenabile și estimează
+    emisiile de CO₂ asociate deplasărilor.
   </p>
 </section>
 
 <section class="layout" id="harta">
+
   <div class="panel">
     <h2>Planifică ruta verde</h2>
+
     <p>
       Selectează punctul de plecare și destinația
-      apăsând de două ori pe hartă.
+      prin două clicuri pe hartă.
     </p>
 
     <label for="mode">Mijloc de transport</label>
+
     <select id="mode">
-      <option value="pedestrian">🚶 Mers pe jos</option>
-      <option value="bicycle">🚲 Bicicletă</option>
+      <option value="pedestrian">
+        🚶 Mers pe jos
+      </option>
+
+      <option value="bicycle">
+        🚲 Bicicletă
+      </option>
+
+      <option value="auto">
+        🚗 Mașină
+      </option>
     </select>
 
-    <label for="priority">Prioritatea traseului</label>
+    <label for="priority">
+      Prioritatea traseului
+    </label>
+
     <select id="priority">
       <option value="green">
         Rută verde preferată
       </option>
+
       <option value="fast">
         Rută eficientă
       </option>
@@ -279,100 +382,150 @@ footer {
       Revino la centrul Iașiului
     </button>
 
-    <div id="status" class="status" role="status"
-         aria-live="polite">
+    <div
+      id="status"
+      class="status"
+      role="status"
+      aria-live="polite"
+    >
       Selectează punctul de plecare pe hartă.
     </div>
 
     <h3>Rezultatele traseului</h3>
 
     <div class="stats">
+
       <div class="stat">
         <strong id="distance">—</strong>
         <span>Distanță</span>
       </div>
+
       <div class="stat">
         <strong id="duration">—</strong>
         <span>Durată</span>
       </div>
+
       <div class="stat">
         <strong id="co2">—</strong>
-        <span>CO₂ evitat</span>
+        <span id="co2Label">CO₂ estimat</span>
       </div>
+
     </div>
 
     <div id="routeInfo" class="route-card" hidden>
-      <strong id="routeTitle">Ruta selectată</strong>
+      <strong id="routeTitle">
+        Ruta selectată
+      </strong>
+
       <p id="routeDescription"></p>
       <p id="comparison"></p>
     </div>
 
     <p class="note">
-      CO₂ evitat este o estimare față de o călătorie
-      echivalentă cu autoturismul, folosind un factor
-      demonstrativ de 150 g CO₂/km.
+      Estimările CO₂ folosesc un factor demonstrativ
+      de 150 g CO₂/km pentru autoturisme.
+      Nu sunt măsurători directe și nu includ
+      condițiile reale de trafic.
     </p>
+
   </div>
 
   <div class="panel">
     <h2>Green Map Iași</h2>
-    <div id="map"></div>
+
+    <div
+      id="map"
+      aria-label="Hartă interactivă a Iașiului"
+    ></div>
 
     <div class="legend">
-      <span><i class="dot route-green"></i>Rută verde</span>
-      <span><i class="dot route-blue"></i>Rută eficientă</span>
-      <span><i class="dot route-start"></i>Plecare</span>
-      <span><i class="dot route-end"></i>Destinație</span>
+      <span>
+        <i class="dot route-green"></i>
+        Rută verde
+      </span>
+
+      <span>
+        <i class="dot route-blue"></i>
+        Rută eficientă
+      </span>
+
+      <span>
+        <i class="dot route-start"></i>
+        Plecare
+      </span>
+
+      <span>
+        <i class="dot route-end"></i>
+        Destinație
+      </span>
     </div>
 
     <h3>Indicații de deplasare</h3>
+
     <ol id="instructions" class="instructions">
       <li>Alege punctele de pe hartă.</li>
     </ol>
 
     <p class="note">
       Date cartografice © OpenStreetMap contributors.
-      Rutare prin Valhalla. Respectă semnalizarea
-      și verifică infrastructura înainte de deplasare.
+      Rutare prin Valhalla. Verifică restricțiile
+      de circulație și semnalizarea înainte
+      de deplasare.
     </p>
   </div>
+
 </section>
 
 <section class="layout" id="despre">
+
   <div class="panel">
     <h2>Despre CarbonIt</h2>
+
     <p>
       Proiect educațional care combină tehnologia,
-      mobilitatea urbană și sustenabilitatea.
+      mobilitatea urbană și sustenabilitatea
+      pentru comunitatea locală.
     </p>
   </div>
+
   <div class="panel" id="carbon">
     <h2>CarbonIT AI</h2>
+
     <p>
-      Green Map include estimarea orientativă a
-      emisiilor evitate. Un model AI pentru analiza
-      emisiilor vehiculelor poate fi integrat ulterior.
+      Green Map include estimarea orientativă
+      a emisiilor vehiculelor și a emisiilor
+      evitate prin mers pe jos sau cu bicicleta.
     </p>
+
     <p class="note">
-      Estimările nu reprezintă măsurători ale
-      calității aerului din Iași.
+      Modulul AI avansat este în curs de integrare.
     </p>
   </div>
+
 </section>
+
 </main>
 
 <footer>
   CarbonIt Movement · Mobilitate sustenabilă
 </footer>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
 
   const centerIasi = [47.1585, 27.6014];
-  const API = "https://valhalla1.openstreetmap.de/route";
+
+  const API =
+    "https://valhalla1.openstreetmap.de/route";
+
+  const EMISSION_FACTOR = 0.15;
 
   const $ = id => document.getElementById(id);
 
@@ -381,32 +534,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (typeof L === "undefined") {
     status.textContent =
-      "Leaflet nu s-a încărcat. Verifică internetul.";
+      "Eroare: Leaflet nu s-a încărcat. " +
+      "Verifică conexiunea la internet.";
     return;
   }
 
+  // Inițializare hartă
   const map = L.map("map").setView(centerIasi, 13);
 
-  L.tileLayer(
+  const tileLayer = L.tileLayer(
     "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-      maxZoom:19,
-      attribution:"&copy; OpenStreetMap contributors"
+      maxZoom: 19,
+      attribution:
+        "&copy; OpenStreetMap contributors"
     }
   ).addTo(map);
 
+  let tileErrors = 0;
+
+  tileLayer.on("tileerror", function () {
+    tileErrors++;
+
+    if (tileErrors === 3) {
+      setStatus(
+        "Unele imagini ale hărții nu s-au încărcat. " +
+        "Verifică conexiunea la internet."
+      );
+    }
+  });
+
   let start = null;
   let end = null;
-  let startMarker = null;
-  let endMarker = null;
-  let routeLine = null;
-  let alternativeLine = null;
+
   let routes = {};
+
   let busy = false;
   let generation = 0;
 
-  const endpointLayer = L.layerGroup().addTo(map);
-  const routeLayer = L.layerGroup().addTo(map);
+  const endpointLayer =
+    L.layerGroup().addTo(map);
+
+  const routeLayer =
+    L.layerGroup().addTo(map);
 
   function setStatus(message) {
     status.textContent = message;
@@ -414,56 +584,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function formatDuration(minutes) {
     const total = Math.round(minutes);
-    if (total < 60) return total + " min";
-    const h = Math.floor(total / 60);
-    const m = total % 60;
-    return h + " h " + m + " min";
+
+    if (total < 60) {
+      return total + " min";
+    }
+
+    const hours = Math.floor(total / 60);
+    const remaining = total % 60;
+
+    return hours + " h " + remaining + " min";
   }
 
   function clearResults() {
     routeLayer.clearLayers();
-    routeLine = null;
-    alternativeLine = null;
     routes = {};
 
     $("distance").textContent = "—";
     $("duration").textContent = "—";
     $("co2").textContent = "—";
+    $("co2Label").textContent = "CO₂ estimat";
+
     $("routeInfo").hidden = true;
-    $("instructions").replaceChildren();
+
+    const instructions = $("instructions");
+    instructions.replaceChildren();
 
     const li = document.createElement("li");
-    li.textContent = "Calculează ruta pentru indicații.";
-    $("instructions").appendChild(li);
+    li.textContent =
+      "Calculează ruta pentru indicații.";
+
+    instructions.appendChild(li);
   }
 
   function resetAll() {
     generation++;
+
     start = null;
     end = null;
+
     endpointLayer.clearLayers();
     clearResults();
-    setStatus("Selectează punctul de plecare.");
+
+    setStatus(
+      "Selectează punctul de plecare."
+    );
   }
 
   function addEndpoint(point, isStart) {
-    const color = isStart ? "#20c997" : "#e74c3c";
+    const color = isStart
+      ? "#20c997"
+      : "#e74c3c";
 
     const marker = L.circleMarker(point, {
-      radius:10,
-      color:"#ffffff",
-      weight:3,
-      fillColor:color,
-      fillOpacity:1
+      radius: 10,
+      color: "#ffffff",
+      weight: 3,
+      fillColor: color,
+      fillOpacity: 1
     }).addTo(endpointLayer);
 
     marker.bindPopup(
-      isStart ? "Punct de plecare" : "Destinație"
+      isStart
+        ? "Punct de plecare"
+        : "Destinație"
     );
 
     return marker;
   }
 
+  // Selectarea punctelor
   map.on("click", function (event) {
     if (busy) return;
 
@@ -471,27 +660,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!start) {
       start = point;
-      startMarker = addEndpoint(point, true);
-      setStatus("Plecare selectată. Alege destinația.");
+      addEndpoint(point, true);
+
+      setStatus(
+        "Plecare selectată. Alege destinația."
+      );
+
     } else if (!end) {
       end = point;
-      endMarker = addEndpoint(point, false);
+      addEndpoint(point, false);
+
       setStatus(
-        "Destinație selectată. Apasă Calculează ruta."
+        "Destinație selectată. " +
+        "Apasă Calculează ruta."
       );
+
     } else {
       resetAll();
+
       start = point;
-      startMarker = addEndpoint(point, true);
-      setStatus("Plecare nouă. Alege destinația.");
+      addEndpoint(point, true);
+
+      setStatus(
+        "Plecare nouă. Alege destinația."
+      );
     }
   });
 
-  // Decodifică traseele polyline6 returnate de Valhalla.
+  // Decodificare geometrie Valhalla polyline6
   function decodePolyline(encoded, precision = 6) {
     let index = 0;
     let lat = 0;
     let lon = 0;
+
     const coordinates = [];
     const factor = Math.pow(10, precision);
 
@@ -505,88 +706,129 @@ document.addEventListener("DOMContentLoaded", function () {
 
         do {
           if (index >= encoded.length) {
-            throw new Error("Geometrie incompletă.");
+            throw new Error(
+              "Geometrie incompletă."
+            );
           }
 
-          byte = encoded.charCodeAt(index++) - 63;
-          result |= (byte & 0x1f) << shift;
+          byte =
+            encoded.charCodeAt(index++) - 63;
+
+          result |=
+            (byte & 0x1f) << shift;
+
           shift += 5;
+
         } while (byte >= 0x20);
 
         values.push(
-          (result & 1) ? ~(result >> 1) : (result >> 1)
+          (result & 1)
+            ? ~(result >> 1)
+            : (result >> 1)
         );
       }
 
       lat += values[0];
       lon += values[1];
-      coordinates.push([lat / factor, lon / factor]);
+
+      coordinates.push([
+        lat / factor,
+        lon / factor
+      ]);
     }
 
     return coordinates;
   }
 
+  // Preferințe pentru fiecare transport
   function routeOptions(mode, variant) {
-    if (mode === "bicycle") {
-      return variant === "green"
-        ? {
-            bicycle: {
-              bicycle_type:"hybrid",
-              use_roads:0.1,
-              use_hills:0.3
+
+    if (mode === "auto") {
+      return {
+        auto: variant === "green"
+          ? {
+              shortest: true
             }
-          }
-        : {
-            bicycle: {
-              bicycle_type:"hybrid",
-              use_roads:0.7,
-              use_hills:0.5
+          : {
+              shortest: false,
+              use_highways: 0.5
             }
-          };
+      };
     }
 
-    return variant === "green"
-      ? {
-          pedestrian: {
-            use_hills:0.3
+    if (mode === "bicycle") {
+      return {
+        bicycle: variant === "green"
+          ? {
+              bicycle_type: "hybrid",
+              use_roads: 0.1,
+              use_hills: 0.3
+            }
+          : {
+              bicycle_type: "hybrid",
+              use_roads: 0.7,
+              use_hills: 0.5
+            }
+      };
+    }
+
+    return {
+      pedestrian: variant === "green"
+        ? {
+            use_hills: 0.3
           }
-        }
-      : {
-          pedestrian: {
-            use_hills:0.5
+        : {
+            use_hills: 0.5
           }
-        };
+    };
   }
 
+  // Solicitare traseu real
   async function requestRoute(mode, variant) {
     const request = {
       locations: [
-        {lat:start.lat, lon:start.lng},
-        {lat:end.lat, lon:end.lng}
+        {
+          lat: start.lat,
+          lon: start.lng
+        },
+        {
+          lat: end.lat,
+          lon: end.lng
+        }
       ],
-      costing:mode,
-      costing_options:routeOptions(mode, variant),
-      units:"kilometers",
-      language:"ro-RO",
-      shape_format:"polyline6",
-      directions_options:{
-        units:"kilometers"
+
+      costing: mode,
+
+      costing_options:
+        routeOptions(mode, variant),
+
+      units: "kilometers",
+
+      language: "ro-RO",
+
+      shape_format: "polyline6",
+
+      directions_options: {
+        units: "kilometers"
       }
     };
 
-    // GET permite utilizarea serviciului public
-    // fără o cheie API.
-    const url = API + "?json=" +
-      encodeURIComponent(JSON.stringify(request));
+    const url =
+      API + "?json=" +
+      encodeURIComponent(
+        JSON.stringify(request)
+      );
 
     const controller = new AbortController();
+
     const timeout = setTimeout(
-      () => controller.abort(), 20000
+      () => controller.abort(),
+      20000
     );
 
     try {
       const response = await fetch(url, {
-        signal:controller.signal
+        signal: controller.signal
       });
 
       if (!response.ok) {
@@ -598,37 +840,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const data = await response.json();
 
-      if (!data.trip || !data.trip.legs ||
-          !data.trip.legs.length) {
+      if (
+        !data.trip ||
+        !Array.isArray(data.trip.legs) ||
+        !data.trip.legs.length
+      ) {
         throw new Error(
-          data.error || "Nu s-a găsit un traseu."
+          data.error ||
+          "Nu s-a găsit un traseu."
         );
       }
 
       const coordinates = [];
       const maneuvers = [];
 
-      data.trip.legs.forEach(function (leg, index) {
-        const part = decodePolyline(leg.shape);
+      data.trip.legs.forEach(
+        function (leg, index) {
 
-        if (index > 0 && part.length) part.shift();
+          const part =
+            decodePolyline(leg.shape);
 
-        coordinates.push(...part);
+          if (index > 0 && part.length) {
+            part.shift();
+          }
 
-        if (Array.isArray(leg.maneuvers)) {
-          maneuvers.push(...leg.maneuvers);
+          coordinates.push(...part);
+
+          if (Array.isArray(leg.maneuvers)) {
+            maneuvers.push(...leg.maneuvers);
+          }
         }
-      });
+      );
 
       if (coordinates.length < 2) {
-        throw new Error("Geometria rutei este invalidă.");
+        throw new Error(
+          "Geometria rutei este invalidă."
+        );
       }
 
       return {
-        coordinates,
-        maneuvers,
-        distance:data.trip.summary.length,
-        minutes:data.trip.summary.time / 60
+        coordinates: coordinates,
+        maneuvers: maneuvers,
+        distance: data.trip.summary.length,
+        minutes: data.trip.summary.time / 60
       };
 
     } finally {
@@ -637,92 +891,131 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(
+      resolve => setTimeout(resolve, ms)
+    );
   }
 
   function routesAreSimilar(a, b) {
     if (!a || !b) return false;
 
-    if (Math.abs(a.distance - b.distance) > 0.05) {
+    if (
+      Math.abs(a.distance - b.distance) > 0.05
+    ) {
       return false;
     }
 
     const pointsA = a.coordinates;
     const pointsB = b.coordinates;
 
-    if (!pointsA.length || !pointsB.length) return false;
+    if (!pointsA.length || !pointsB.length) {
+      return false;
+    }
 
-    const middleA = pointsA[Math.floor(pointsA.length / 2)];
-    const middleB = pointsB[Math.floor(pointsB.length / 2)];
+    const middleA =
+      pointsA[Math.floor(pointsA.length / 2)];
 
-    return map.distance(middleA, middleB) < 35;
+    const middleB =
+      pointsB[Math.floor(pointsB.length / 2)];
+
+    return map.distance(
+      middleA,
+      middleB
+    ) < 35;
   }
 
+  // Indicații de deplasare
   function showInstructions(route) {
     const list = $("instructions");
     list.replaceChildren();
 
-    const maneuvers = route.maneuvers;
-
-    if (!maneuvers.length) {
+    if (!route.maneuvers.length) {
       const li = document.createElement("li");
+
       li.textContent =
         "Urmărește traseul afișat pe hartă.";
+
       list.appendChild(li);
       return;
     }
 
-    maneuvers.forEach(function (maneuver) {
-      const li = document.createElement("li");
-      li.textContent =
-        maneuver.instruction ||
-        "Continuă pe traseul indicat.";
-      list.appendChild(li);
-    });
+    route.maneuvers.forEach(
+      function (maneuver) {
+        const li = document.createElement("li");
+
+        li.textContent =
+          maneuver.instruction ||
+          "Continuă pe traseul indicat.";
+
+        list.appendChild(li);
+      }
+    );
   }
 
+  // Afișarea traseului
   function showRoute(variant) {
     const selected = routes[variant];
+
     if (!selected) return;
 
     const otherVariant =
-      variant === "green" ? "fast" : "green";
+      variant === "green"
+        ? "fast"
+        : "green";
 
     const other = routes[otherVariant];
 
     routeLayer.clearLayers();
 
-    if (other && !routesAreSimilar(selected, other)) {
-      alternativeLine = L.polyline(
+    if (
+      other &&
+      !routesAreSimilar(selected, other)
+    ) {
+      L.polyline(
         other.coordinates,
         {
-          color:otherVariant === "green"
-            ? "#16a34a" : "#3498db",
-          weight:5,
-          opacity:0.45,
-          dashArray:"9 8"
+          color:
+            otherVariant === "green"
+              ? "#16a34a"
+              : "#3498db",
+
+          weight: 5,
+          opacity: 0.45,
+          dashArray: "9 8"
         }
       ).addTo(routeLayer);
     }
 
-    routeLine = L.polyline(
+    const routeLine = L.polyline(
       selected.coordinates,
       {
-        color:variant === "green"
-          ? "#16a34a" : "#3498db",
-        weight:7,
-        opacity:0.95,
-        lineJoin:"round"
+        color:
+          variant === "green"
+            ? "#16a34a"
+            : "#3498db",
+
+        weight: 7,
+        opacity: 0.95,
+        lineJoin: "round"
       }
     ).addTo(routeLayer);
 
-    map.fitBounds(routeLine.getBounds(), {
-      padding:[35,35],
-      maxZoom:16
-    });
+    map.fitBounds(
+      routeLine.getBounds(),
+      {
+        padding: [35, 35],
+        maxZoom: 16
+      }
+    );
 
+    // Calculul emisiilor CO2
     const distance = selected.distance;
-    const co2 = distance * 0.15;
+    const mode = $("mode").value;
+
+    const carEmissions =
+      distance * EMISSION_FACTOR;
+
+    const co2 = carEmissions;
 
     $("distance").textContent =
       distance.toFixed(2) + " km";
@@ -733,22 +1026,47 @@ document.addEventListener("DOMContentLoaded", function () {
     $("co2").textContent =
       co2.toFixed(2) + " kg";
 
+    $("co2Label").textContent =
+      mode === "auto"
+        ? "CO₂ emis estimat"
+        : "CO₂ evitat estimat";
+
     $("routeInfo").hidden = false;
 
-    $("routeTitle").textContent =
-      variant === "green"
-        ? "Rută cu preferințe verzi"
-        : "Rută eficientă";
+    if (mode === "auto") {
+      $("routeTitle").textContent =
+        variant === "green"
+          ? "Rută auto cu distanță prioritizată"
+          : "Rută auto eficientă";
 
-    $("routeDescription").textContent =
-      variant === "green"
-        ? "Traseu calculat cu preferințe pentru " +
-          "infrastructură potrivită modului ales. " +
-          "Nu reprezintă o analiză directă a poluării."
-        : "Traseu calculat cu preferințe standard " +
-          "pentru deplasarea selectată.";
+      $("routeDescription").textContent =
+        variant === "green"
+          ? "Traseu auto cu preferință pentru " +
+            "distanța mai scurtă. Nu garantează " +
+            "consumul minim de combustibil."
+          : "Traseu auto calculat cu preferințe " +
+            "standard de deplasare.";
 
-    if (other && !routesAreSimilar(selected, other)) {
+    } else {
+      $("routeTitle").textContent =
+        variant === "green"
+          ? "Rută cu preferințe verzi"
+          : "Rută eficientă";
+
+      $("routeDescription").textContent =
+        variant === "green"
+          ? "Traseu cu preferințe pentru " +
+            "deplasare pietonală sau cu bicicleta. " +
+            "Nu reprezintă o analiză directă " +
+            "a poluării."
+          : "Traseu calculat cu preferințe " +
+            "standard pentru modul selectat.";
+    }
+
+    if (
+      other &&
+      !routesAreSimilar(selected, other)
+    ) {
       const difference =
         selected.distance - other.distance;
 
@@ -756,67 +1074,93 @@ document.addEventListener("DOMContentLoaded", function () {
         "Diferență față de cealaltă rută: " +
         (difference >= 0 ? "+" : "") +
         difference.toFixed(2) + " km.";
+
     } else {
       $("comparison").textContent =
-        "Nu există o alternativă semnificativ diferită " +
-        "în rezultatele obținute.";
+        "Nu există o alternativă semnificativ " +
+        "diferită în rezultatele obținute.";
     }
 
     showInstructions(selected);
-    setStatus("Ruta a fost calculată și afișată.");
+
+    setStatus(
+      "Ruta a fost calculată și afișată."
+    );
   }
 
+  // Calculul rutelor
   async function calculateRoutes() {
     if (busy) return;
 
     if (!start || !end) {
       setStatus(
-        "Selectează mai întâi plecarea și destinația."
+        "Selectează mai întâi plecarea " +
+        "și destinația."
       );
       return;
     }
 
     if (map.distance(start, end) < 20) {
       setStatus(
-        "Punctele sunt prea apropiate. Alege " +
-        "o destinație mai îndepărtată."
+        "Punctele sunt prea apropiate. " +
+        "Alege o destinație mai îndepărtată."
       );
       return;
     }
 
     const currentGeneration = ++generation;
+
     const mode = $("mode").value;
     const priority = $("priority").value;
 
     busy = true;
+
     calculateButton.disabled = true;
-    calculateButton.textContent = "Se calculează...";
+
+    calculateButton.textContent =
+      "Se calculează...";
+
     clearResults();
 
     try {
-      setStatus("Se calculează prima variantă...");
+      setStatus(
+        "Se calculează prima variantă..."
+      );
 
-      const first = await requestRoute(mode, priority);
+      const first =
+        await requestRoute(mode, priority);
 
-      if (currentGeneration !== generation) return;
+      if (
+        currentGeneration !== generation
+      ) return;
 
       routes[priority] = first;
+
       showRoute(priority);
 
-      // Respectă limita serviciului public:
-      // maximum o solicitare pe secundă.
+      // Pauză între solicitări către API
       await wait(1200);
 
-      if (currentGeneration !== generation) return;
+      if (
+        currentGeneration !== generation
+      ) return;
 
       const alternative =
-        priority === "green" ? "fast" : "green";
+        priority === "green"
+          ? "fast"
+          : "green";
 
-      setStatus("Se verifică o rută alternativă...");
+      setStatus(
+        "Se verifică o rută alternativă..."
+      );
 
       try {
         routes[alternative] =
-          await requestRoute(mode, alternative);
+          await requestRoute(
+            mode,
+            alternative
+          );
+
       } catch (error) {
         console.warn(
           "Ruta alternativă nu este disponibilă:",
@@ -824,14 +1168,21 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       }
 
-      if (currentGeneration !== generation) return;
+      if (
+        currentGeneration !== generation
+      ) return;
 
       showRoute(priority);
 
     } catch (error) {
-      console.error("Eroare rutare:", error);
+      console.error(
+        "Eroare rutare:",
+        error
+      );
 
-      if (currentGeneration === generation) {
+      if (
+        currentGeneration === generation
+      ) {
         setStatus(
           "Nu s-a putut calcula ruta: " +
           error.message +
@@ -841,64 +1192,96 @@ document.addEventListener("DOMContentLoaded", function () {
 
     } finally {
       busy = false;
+
       calculateButton.disabled = false;
-      calculateButton.textContent = "Calculează ruta";
+
+      calculateButton.textContent =
+        "Calculează ruta";
     }
   }
 
   calculateButton.addEventListener(
-    "click", calculateRoutes
+    "click",
+    calculateRoutes
   );
 
-  $("reset").addEventListener("click", function () {
-    if (busy) return;
-    resetAll();
-  });
+  $("reset").addEventListener(
+    "click",
+    function () {
+      if (busy) return;
+      resetAll();
+    }
+  );
 
-  $("center").addEventListener("click", function () {
-    map.setView(centerIasi, 13);
-  });
+  $("center").addEventListener(
+    "click",
+    function () {
+      map.setView(centerIasi, 13);
+    }
+  );
 
-  $("mode").addEventListener("change", function () {
-    if (busy) return;
-    clearResults();
-    setStatus(
-      "Modul de transport a fost schimbat. " +
-      "Calculează din nou ruta."
-    );
-  });
-
-  $("priority").addEventListener(
-    "change", function () {
+  $("mode").addEventListener(
+    "change",
+    function () {
       if (busy) return;
 
-      const priority = $("priority").value;
+      clearResults();
+
+      setStatus(
+        "Modul de transport a fost schimbat. " +
+        "Calculează din nou ruta."
+      );
+    }
+  );
+
+  $("priority").addEventListener(
+    "change",
+    function () {
+      if (busy) return;
+
+      const priority =
+        $("priority").value;
 
       if (routes[priority]) {
         showRoute(priority);
       } else {
         clearResults();
+
         setStatus(
-          "Apasă Calculează ruta pentru noua preferință."
+          "Apasă Calculează ruta " +
+          "pentru noua preferință."
         );
       }
     }
   );
 
-  requestAnimationFrame(function () {
-    map.invalidateSize();
-  });
+  // Corectarea dimensiunii hărții
+  requestAnimationFrame(
+    function () {
+      map.invalidateSize();
+    }
+  );
 
-  if (typeof ResizeObserver !== "undefined") {
-    new ResizeObserver(function () {
-      map.invalidateSize();
-    }).observe($("map"));
+  if (
+    typeof ResizeObserver !== "undefined"
+  ) {
+    new ResizeObserver(
+      function () {
+        map.invalidateSize();
+      }
+    ).observe($("map"));
+
   } else {
-    window.addEventListener("resize", function () {
-      map.invalidateSize();
-    });
+    window.addEventListener(
+      "resize",
+      function () {
+        map.invalidateSize();
+      }
+    );
   }
+
 });
 </script>
+
 </body>
 </html>
