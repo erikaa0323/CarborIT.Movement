@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Map Iași | CarbonIt</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <style>
+    :root {
+      --bg: #071b19;
+      --panel: #102a26;
+      --green: #8ce0b0;
+      --text: #f0f7f2;
+      --muted: #a8c0b7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid #24423b;
+    }
+
+    .logo { color: var(--green); font-weight: bold; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 14px;
+    }
+
+    main { max-width: 1200px; margin: auto; padding: 48px 6%; }
+
+    .eyebrow {
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+    }
+
+    h1 { font-size: clamp(34px, 6vw, 58px); margin: 14px 0; }
+    .intro { color: var(--muted); max-width: 650px; line-height: 1.7; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 22px;
+      margin-top: 34px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid #28473f;
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .panel p { color: var(--muted); line-height: 1.6; }
+    label { display: block; margin: 18px 0 8px; }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 9px;
+      font: inherit;
+    }
+
+    input, select {
+      background: #071b19;
+      color: var(--text);
+      border: 1px solid #426158;
+    }
+
+    button {
+      margin-top: 14px;
+      background: var(--green);
+      color: #09241b;
+      font-weight: bold;
+      border: 0;
+      cursor: pointer;
+    }
+
+    #map {
+      width: 100%;
+      height: 440px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+    footer { padding: 28px 6%; color: var(--muted); border-top: 1px solid #24423b; }
+
+    @media (max-width: 750px) {
+      header { align-items: flex-start; flex-direction: column; }
+      nav a { margin: 0 12px 0 0; }
+      .layout { grid-template-columns: 1fr; }
+      main { padding-top: 32px; }
+      #map { height: 360px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">CarbonIt · Iași</div>
+    <nav>
+      <a href="#harta">Green Map</a>
+      <a href="#despre">Despre proiect</a>
+      <a href="#ecopulse">EcoPulse AI</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div class="eyebrow">Mobilitate urbană · Mediu · Tehnologie</div>
+      <h1>Descoperă un Iași mai verde.</h1>
+      <p class="intro">
+        Green Map își propune să ajute comunitatea să descopere
+        alternative de transport și să ia decizii mai informate
+        pentru deplasările prin oraș.
+      </p>
+    </section>
+
+    <section class="layout" id="harta">
+      <div class="panel">
+        <h2>Explorează harta</h2>
+        <p>
+          Selectează un tip de loc și apasă pe hartă pentru a adăuga
+          un marcaj temporar.
+        </p>
+
+        <label for="category">Tipul marcajului</label>
+        <select id="category">
+          <option value="bike">Infrastructură pentru biciclete</option>
+          <option value="transport">Transport public</option>
+          <option value="green">Spațiu verde</option>
+          <option value="other">Alt punct de interes</option>
+        </select>
+
+        <button id="locate">Revino la centrul Iașiului</button>
+
+        <p id="status" aria-live="polite">
+          Harta este gata de explorare.
+        </p>
+
+        <p class="note">
+          Marcajele adăugate prin clic sunt temporare și dispar
+          la reîncărcarea paginii.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h2>Green Map Iași</h2>
+        <div id="map"></div>
+        <p class="note">
+          Hartă © OpenStreetMap contributors.
+          Datele despre rute și infrastructură trebuie verificate
+          înainte de publicarea recomandărilor.
+        </p>
+      </div>
+    </section>
+
+    <section class="layout" id="despre">
+      <div class="panel">
+        <h2>Despre CarbonIt</h2>
+        <p>
+          Un proiect care explorează legătura dintre mobilitate,
+          mediu și soluții digitale pentru comunitatea locală.
+        </p>
+      </div>
+
+      <div class="panel" id="ecopulse">
+        <h2>EcoPulse AI</h2>
+        <p>
+          Modulul de estimare a emisiilor vehiculelor va fi integrat
+          aici. Estimările modelului nu reprezintă măsurători directe
+          ale calității aerului din Iași.
+        </p>
+        <p class="note">Modul în curs de integrare.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    CarbonIt Movement · Proiect educațional pentru mobilitate sustenabilă
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const centerIasi = [47.1585, 27.6014];
+
+    const map = L.map("map").setView(centerIasi, 13);
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+
+    L.marker(centerIasi)
+      .addTo(map)
+      .bindPopup("Centrul Iașiului");
+
+    map.on("click", function (event) {
+      const category = document.getElementById("category");
+      const selectedText = category.options[category.selectedIndex].text;
+
+      L.marker(event.latlng)
+        .addTo(map)
+        .bindPopup(selectedText + "<br>Marcaj demonstrativ");
+
+      document.getElementById("status").textContent =
+        "Ai adăugat un marcaj temporar: " + selectedText + ".";
+    });
+
+    document.getElementById("locate").addEventListener("click", function () {
+      map.setView(centerIasi, 13);
+    });
+  </script>
+</body>
+</html>
