@@ -201,6 +201,28 @@
         Numărul de zile raportate pentru fiecare
         mijloc de transport.
       </p>
+      <section style="margin:24px 0;">
+  <h2>🌱 Impactul transportului asupra mediului</h2>
+
+  <div style="display:flex;gap:16px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:220px;padding:20px;
+                background:#123c32;border-radius:14px;">
+      <p>CO₂e total estimat / 5 zile</p>
+      <h2 id="co2Total">— kg</h2>
+    </div>
+
+    <div style="flex:1;min-width:220px;padding:20px;
+                background:#123c32;border-radius:14px;">
+      <p>CO₂e mediu / elev / 5 zile</p>
+      <h2 id="co2Average">— kg</h2>
+    </div>
+  </div>
+
+  <p id="co2Note" style="opacity:.75;font-size:13px;">
+    Estimare bazată pe distanțele și mijloacele de
+    transport declarate pentru o săptămână școlară.
+  </p>
+</section>
       <div id="transportChart"></div>
     </section>
 
@@ -361,6 +383,24 @@
         }
 
         const data = await response.json();
+
+        const co2 = data.co2;
+
+const totalElement = document.getElementById('co2Total');
+const averageElement = document.getElementById('co2Average');
+
+function formatKg(value) {
+  return typeof value === 'number' && Number.isFinite(value)
+    ? value.toLocaleString('ro-RO', {
+        maximumFractionDigits: 2
+      }) + ' kg'
+    : '— kg';
+}
+
+if (totalElement && averageElement) {
+  totalElement.textContent = formatKg(co2?.totalKg5Days);
+  averageElement.textContent = formatKg(co2?.averageKg5Days);
+}
 
         if (
           data.ok !== true ||
