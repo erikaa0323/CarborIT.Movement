@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Green Map Iași | CarbonIt</title>
 
-  <link
-    rel="stylesheet"
+  <link rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  >
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoQnN4sS4vD8k="
+    crossorigin="">
 
   <style>
     :root {
@@ -38,7 +38,12 @@
       border-bottom: 1px solid #24423b;
     }
 
-    .logo { color: var(--green); font-weight: bold; }
+    .logo {
+      color: var(--green);
+      font-weight: bold;
+      font-size: 20px;
+    }
+
     nav a {
       color: var(--muted);
       text-decoration: none;
@@ -46,7 +51,13 @@
       font-size: 14px;
     }
 
-    main { max-width: 1200px; margin: auto; padding: 48px 6%; }
+    nav a:hover { color: var(--green); }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 48px 6%;
+    }
 
     .eyebrow {
       color: var(--green);
@@ -55,8 +66,16 @@
       font-size: 12px;
     }
 
-    h1 { font-size: clamp(34px, 6vw, 58px); margin: 14px 0; }
-    .intro { color: var(--muted); max-width: 650px; line-height: 1.7; }
+    h1 {
+      font-size: clamp(34px, 6vw, 58px);
+      margin: 14px 0;
+    }
+
+    .intro {
+      color: var(--muted);
+      max-width: 650px;
+      line-height: 1.7;
+    }
 
     .layout {
       display: grid;
@@ -70,10 +89,18 @@
       border: 1px solid #28473f;
       border-radius: 18px;
       padding: 22px;
+      min-width: 0;
     }
 
-    .panel p { color: var(--muted); line-height: 1.6; }
-    label { display: block; margin: 18px 0 8px; }
+    .panel p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+    }
 
     input, select, button {
       width: 100%;
@@ -97,40 +124,145 @@
       cursor: pointer;
     }
 
+    button:hover { opacity: 0.9; }
+
+    .secondary-btn {
+      background: #24463c;
+      color: var(--text);
+      border: 1px solid #426158;
+    }
+
+    .danger-btn {
+      background: #a83c42;
+      color: white;
+    }
+
     #map {
       width: 100%;
       height: 440px;
+      min-height: 360px;
       border-radius: 12px;
       overflow: hidden;
+      background: #dce5dd;
+      z-index: 0;
     }
 
-    .note { font-size: 12px; color: var(--muted); margin-top: 12px; }
-    footer { padding: 28px 6%; color: var(--muted); border-top: 1px solid #24423b; }
+    .note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .filters {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .filter-item input {
+      width: auto;
+      accent-color: #8ce0b0;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dot {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .bike { background: #3498db; }
+    .transport { background: #f39c12; }
+    .green { background: #2ecc71; }
+    .other { background: #b57bee; }
+
+    .custom-marker {
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px #0007;
+    }
+
+    .popup-delete {
+      background: #a83c42;
+      color: white;
+      padding: 8px 12px;
+      margin-top: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .leaflet-popup-content {
+      color: #172b23;
+      min-width: 145px;
+    }
+
+    .leaflet-popup-content p {
+      color: #44584f;
+      margin: 8px 0;
+    }
+
+    footer {
+      padding: 28px 6%;
+      color: var(--muted);
+      border-top: 1px solid #24423b;
+    }
 
     @media (max-width: 750px) {
-      header { align-items: flex-start; flex-direction: column; }
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
       nav a { margin: 0 12px 0 0; }
+
       .layout { grid-template-columns: 1fr; }
+
       main { padding-top: 32px; }
+
       #map { height: 360px; }
     }
   </style>
 </head>
 
 <body>
+
   <header>
     <div class="logo">CarbonIt · Iași</div>
     <nav>
       <a href="#harta">Green Map</a>
       <a href="#despre">Despre proiect</a>
-      <a href="#ecopulse">CarbonIT Movement</a>
+      <a href="#ecopulse">CarbonIT AI</a>
     </nav>
   </header>
 
   <main>
+
     <section>
-      <div class="eyebrow">Mobilitate urbană · Mediu · Tehnologie</div>
+      <div class="eyebrow">
+        Mobilitate urbană · Mediu · Tehnologie
+      </div>
+
       <h1>Descoperă un Iași mai verde.</h1>
+
       <p class="intro">
         Green Map își propune să ajute comunitatea să descopere
         alternative de transport și să ia decizii mai informate
@@ -139,45 +271,107 @@
     </section>
 
     <section class="layout" id="harta">
+
       <div class="panel">
         <h2>Explorează harta</h2>
+
         <p>
-          Selectează un tip de loc și apasă pe hartă pentru a adăuga
-          un marcaj temporar.
+          Selectează un tip de loc și apasă pe hartă pentru
+          a adăuga un marcaj. Marcajele sunt salvate automat
+          în acest browser.
         </p>
 
         <label for="category">Tipul marcajului</label>
+
         <select id="category">
-          <option value="bike">Infrastructură pentru biciclete</option>
-          <option value="transport">Transport public</option>
-          <option value="green">Spațiu verde</option>
-          <option value="other">Alt punct de interes</option>
+          <option value="bike">
+            Infrastructură pentru biciclete
+          </option>
+          <option value="transport">
+            Transport public
+          </option>
+          <option value="green">
+            Spațiu verde
+          </option>
+          <option value="other">
+            Alt punct de interes
+          </option>
         </select>
 
-        <button id="locate">Revino la centrul Iașiului</button>
+        <label for="markerName">Numele locului (opțional)</label>
+        <input
+          id="markerName"
+          type="text"
+          maxlength="100"
+          placeholder="Ex: Parcare biciclete"
+        >
 
-        <p id="status" aria-live="polite">
+        <button id="locate">
+          Revino la centrul Iașiului
+        </button>
+
+        <h3>Filtrează marcajele</h3>
+
+        <div class="filters">
+          <label class="filter-item">
+            <input type="checkbox" value="bike" checked>
+            Infrastructură pentru biciclete
+          </label>
+
+          <label class="filter-item">
+            <input type="checkbox" value="transport" checked>
+            Transport public
+          </label>
+
+          <label class="filter-item">
+            <input type="checkbox" value="green" checked>
+            Spații verzi
+          </label>
+
+          <label class="filter-item">
+            <input type="checkbox" value="other" checked>
+            Alte puncte de interes
+          </label>
+        </div>
+
+        <button id="clearMarkers" class="danger-btn">
+          Șterge toate marcajele
+        </button>
+
+        <p id="status" role="status" aria-live="polite">
           Harta este gata de explorare.
         </p>
 
         <p class="note">
-          Marcajele adăugate prin clic sunt temporare și dispar
-          la reîncărcarea paginii.
+          Marcajele sunt salvate local pe dispozitivul tău.
+          Ele nu sunt vizibile altor utilizatori.
         </p>
       </div>
 
       <div class="panel">
         <h2>Green Map Iași</h2>
-        <div id="map"></div>
+
+        <div id="map" aria-label="Hartă interactivă a Iașiului"></div>
+
+        <div class="legend">
+          <span><i class="dot bike"></i>Biciclete</span>
+          <span><i class="dot transport"></i>Transport</span>
+          <span><i class="dot green"></i>Spații verzi</span>
+          <span><i class="dot other"></i>Altele</span>
+        </div>
+
         <p class="note">
           Hartă © OpenStreetMap contributors.
-          Datele despre rute și infrastructură trebuie verificate
+          Marcajele utilizatorilor sunt demonstrative.
+          Datele despre infrastructură trebuie verificate
           înainte de publicarea recomandărilor.
         </p>
       </div>
+
     </section>
 
     <section class="layout" id="despre">
+
       <div class="panel">
         <h2>Despre CarbonIt</h2>
         <p>
@@ -189,49 +383,406 @@
       <div class="panel" id="ecopulse">
         <h2>CarbonIT AI</h2>
         <p>
-          Modulul de estimare a emisiilor vehiculelor va fi integrat
-          aici. Estimările modelului nu reprezintă măsurători directe
-          ale calității aerului din Iași.
+          Modulul de estimare a emisiilor vehiculelor va fi
+          integrat aici. Estimările modelului nu reprezintă
+          măsurători directe ale calității aerului din Iași.
         </p>
         <p class="note">Modul în curs de integrare.</p>
       </div>
+
     </section>
+
   </main>
 
   <footer>
-    CarbonIt Movement · Proiect educațional pentru mobilitate sustenabilă
+    CarbonIt Movement · Proiect educațional pentru
+    mobilitate sustenabilă
   </footer>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="">
+  </script>
+
   <script>
-    const centerIasi = [47.1585, 27.6014];
+    document.addEventListener("DOMContentLoaded", function () {
 
-    const map = L.map("map").setView(centerIasi, 13);
+      const status = document.getElementById("status");
+      const categorySelect = document.getElementById("category");
+      const markerNameInput = document.getElementById("markerName");
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(map);
+      const centerIasi = [47.1585, 27.6014];
+      const STORAGE_KEY = "carbonit_greenmap_iasi_v1";
 
-    L.marker(centerIasi)
+      const categories = {
+        bike: {
+          label: "Infrastructură pentru biciclete",
+          color: "#3498db"
+        },
+        transport: {
+          label: "Transport public",
+          color: "#f39c12"
+        },
+        green: {
+          label: "Spațiu verde",
+          color: "#2ecc71"
+        },
+        other: {
+          label: "Alt punct de interes",
+          color: "#b57bee"
+        }
+      };
+
+      if (typeof L === "undefined") {
+        status.textContent =
+          "Eroare: biblioteca Leaflet nu s-a încărcat. " +
+          "Verifică conexiunea la internet.";
+        return;
+      }
+
+      const map = L.map("map", {
+        center: centerIasi,
+        zoom: 13,
+        zoomControl: true
+      });
+
+      const tileLayer = L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors'
+        }
+      );
+
+      tileLayer.addTo(map);
+
+      let tileErrors = 0;
+
+      tileLayer.on("tileerror", function () {
+        tileErrors++;
+
+        if (tileErrors === 3) {
+          status.textContent =
+            "Unele imagini ale hărții nu s-au încărcat. " +
+            "Verifică internetul sau încearcă din nou.";
+        }
+      });
+
+      L.circleMarker(centerIasi, {
+        radius: 8,
+        color: "#ffffff",
+        weight: 3,
+        fillColor: "#167a55",
+        fillOpacity: 1
+      })
       .addTo(map)
       .bindPopup("Centrul Iașiului");
 
-    map.on("click", function (event) {
-      const category = document.getElementById("category");
-      const selectedText = category.options[category.selectedIndex].text;
+      const markerLayer = L.layerGroup().addTo(map);
+      const markerObjects = new Map();
 
-      L.marker(event.latlng)
-        .addTo(map)
-        .bindPopup(selectedText + "<br>Marcaj demonstrativ");
+      let savedMarkers = [];
 
-      document.getElementById("status").textContent =
-        "Ai adăugat un marcaj temporar: " + selectedText + ".";
-    });
+      function generateId() {
+        if (
+          window.crypto &&
+          typeof window.crypto.randomUUID === "function"
+        ) {
+          return window.crypto.randomUUID();
+        }
 
-    document.getElementById("locate").addEventListener("click", function () {
-      map.setView(centerIasi, 13);
+        return Date.now().toString(36) +
+          Math.random().toString(36).slice(2);
+      }
+
+      function loadMarkers() {
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY);
+          const parsed = stored ? JSON.parse(stored) : [];
+
+          if (!Array.isArray(parsed)) {
+            return [];
+          }
+
+          return parsed.filter(function (item) {
+            return item &&
+              typeof item.id === "string" &&
+              typeof item.lat === "number" &&
+              Number.isFinite(item.lat) &&
+              item.lat >= -90 &&
+              item.lat <= 90 &&
+              typeof item.lng === "number" &&
+              Number.isFinite(item.lng) &&
+              item.lng >= -180 &&
+              item.lng <= 180 &&
+              Object.prototype.hasOwnProperty.call(
+                categories,
+                item.category
+              );
+          }).map(function (item) {
+            return {
+              id: item.id,
+              lat: item.lat,
+              lng: item.lng,
+              category: item.category,
+              name: typeof item.name === "string"
+                ? item.name.slice(0, 100)
+                : ""
+            };
+          });
+
+        } catch (error) {
+          console.warn("Nu s-au putut citi marcajele:", error);
+          return [];
+        }
+      }
+
+      function saveMarkers() {
+        try {
+          localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(savedMarkers)
+          );
+          return true;
+        } catch (error) {
+          console.warn("Nu s-au putut salva marcajele:", error);
+          status.textContent =
+            "Marcajele sunt afișate, dar nu au putut fi " +
+            "salvate în acest browser.";
+          return false;
+        }
+      }
+
+      function createMarkerIcon(category) {
+        const color = categories[category].color;
+
+        return L.divIcon({
+          className: "",
+          html:
+            '<div class="custom-marker" style="' +
+            'width:22px;height:22px;' +
+            'background-color:' + color + ';' +
+            '"></div>',
+          iconSize: [22, 22],
+          iconAnchor: [11, 11],
+          popupAnchor: [0, -12]
+        });
+      }
+
+      function getActiveCategories() {
+        const active = new Set();
+
+        document.querySelectorAll(
+          '.filters input[type="checkbox"]:checked'
+        ).forEach(function (checkbox) {
+          active.add(checkbox.value);
+        });
+
+        return active;
+      }
+
+      function refreshMarkers() {
+        const activeCategories = getActiveCategories();
+
+        markerObjects.forEach(function (marker, id) {
+          const data = savedMarkers.find(function (item) {
+            return item.id === id;
+          });
+
+          if (!data) return;
+
+          if (activeCategories.has(data.category)) {
+            if (!markerLayer.hasLayer(marker)) {
+              markerLayer.addLayer(marker);
+            }
+          } else {
+            if (markerLayer.hasLayer(marker)) {
+              markerLayer.removeLayer(marker);
+            }
+          }
+        });
+      }
+
+      function deleteMarker(id) {
+        const marker = markerObjects.get(id);
+
+        if (marker) {
+          markerLayer.removeLayer(marker);
+          markerObjects.delete(id);
+        }
+
+        savedMarkers = savedMarkers.filter(function (item) {
+          return item.id !== id;
+        });
+
+        const saved = saveMarkers();
+
+        if (saved) {
+          status.textContent = "Marcajul a fost șters.";
+        }
+      }
+
+      function createMarker(data) {
+        const marker = L.marker(
+          [data.lat, data.lng],
+          {
+            icon: createMarkerIcon(data.category)
+          }
+        );
+
+        const popupContainer = document.createElement("div");
+
+        const title = document.createElement("strong");
+        title.textContent =
+          data.name || categories[data.category].label;
+
+        const description = document.createElement("p");
+        description.textContent =
+          categories[data.category].label;
+
+        const coordinates = document.createElement("p");
+        coordinates.textContent =
+          "Coordonate: " +
+          data.lat.toFixed(5) + ", " +
+          data.lng.toFixed(5);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "popup-delete";
+        deleteButton.textContent = "Șterge marcajul";
+
+        deleteButton.addEventListener("click", function () {
+          deleteMarker(data.id);
+          map.closePopup();
+        });
+
+        popupContainer.appendChild(title);
+        popupContainer.appendChild(description);
+        popupContainer.appendChild(coordinates);
+        popupContainer.appendChild(deleteButton);
+
+        marker.bindPopup(popupContainer);
+
+        markerObjects.set(data.id, marker);
+
+        if (getActiveCategories().has(data.category)) {
+          markerLayer.addLayer(marker);
+        }
+
+        return marker;
+      }
+
+      savedMarkers = loadMarkers();
+
+      savedMarkers.forEach(function (data) {
+        createMarker(data);
+      });
+
+      map.on("click", function (event) {
+        const selectedCategory = categorySelect.value;
+
+        if (!categories[selectedCategory]) {
+          return;
+        }
+
+        const markerName = markerNameInput.value.trim();
+
+        const data = {
+          id: generateId(),
+          lat: event.latlng.lat,
+          lng: event.latlng.lng,
+          category: selectedCategory,
+          name: markerName
+        };
+
+        savedMarkers.push(data);
+
+        const marker = createMarker(data);
+        const saved = saveMarkers();
+
+        if (markerLayer.hasLayer(marker)) {
+          marker.openPopup();
+        }
+
+        if (saved) {
+          status.textContent =
+            "Ai adăugat un marcaj: " +
+            (markerName || categories[selectedCategory].label) +
+            ".";
+        }
+
+        markerNameInput.value = "";
+      });
+
+      document.querySelectorAll(
+        '.filters input[type="checkbox"]'
+      ).forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+          refreshMarkers();
+        });
+      });
+
+      document.getElementById("locate")
+        .addEventListener("click", function () {
+          map.setView(centerIasi, 13, {
+            animate: true
+          });
+
+          status.textContent =
+            "Harta a revenit la centrul Iașiului.";
+        });
+
+      document.getElementById("clearMarkers")
+        .addEventListener("click", function () {
+
+          if (savedMarkers.length === 0) {
+            status.textContent =
+              "Nu există marcaje de șters.";
+            return;
+          }
+
+          const confirmed = window.confirm(
+            "Sigur vrei să ștergi toate marcajele salvate?"
+          );
+
+          if (!confirmed) return;
+
+          markerLayer.clearLayers();
+          markerObjects.clear();
+          savedMarkers = [];
+
+          const saved = saveMarkers();
+
+          if (saved) {
+            status.textContent =
+              "Toate marcajele au fost șterse.";
+          }
+        });
+
+      // Recalculează dimensiunile hărții după afișare.
+      requestAnimationFrame(function () {
+        map.invalidateSize();
+      });
+
+      // Actualizează harta dacă se modifică dimensiunea.
+      if (typeof ResizeObserver !== "undefined") {
+        const observer = new ResizeObserver(function () {
+          map.invalidateSize();
+        });
+
+        observer.observe(document.getElementById("map"));
+      } else {
+        window.addEventListener("resize", function () {
+          map.invalidateSize();
+        });
+      }
+
+      status.textContent =
+        "Harta este gata. Marcaje încărcate: " +
+        savedMarkers.length + ".";
+
     });
   </script>
+
 </body>
 </html>
