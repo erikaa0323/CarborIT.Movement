@@ -1,2 +1,429 @@
 
 /* CarbonIt - stilurile hartii */
+
+/* =========================================
+   CARBONIT | GREEN MAP IASI
+   STYLE.CSS
+   ========================================= */
+
+:root {
+  --background: #071b19;
+  --surface: #102a26;
+  --surface-light: #183b33;
+  --green: #8ce0b0;
+  --green-dark: #24a36a;
+  --text: #f2f8f4;
+  --muted: #a9c2b7;
+  --border: #2b4b42;
+  --blue: #3898ed;
+  --orange: #f5a524;
+  --red: #eb5757;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* HEADER */
+
+header {
+  padding: 20px 5%;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  color: var(--green);
+  font-size: 22px;
+  font-weight: 800;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: var(--green);
+}
+
+/* GENERAL */
+
+main {
+  max-width: 1400px;
+  margin: auto;
+  padding: 35px 5%;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: clamp(32px, 5vw, 58px);
+  line-height: 1.15;
+  margin: 15px 0;
+}
+
+h2 {
+  margin: 0 0 15px;
+  font-size: 23px;
+}
+
+h3 {
+  font-size: 17px;
+}
+
+.intro {
+  max-width: 780px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* LAYOUT */
+
+.layout {
+  display: grid;
+  grid-template-columns: 350px minmax(0, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.panel {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+}
+
+.panel p {
+  color: var(--muted);
+}
+
+/* FORMULARE */
+
+label {
+  display: block;
+  margin: 16px 0 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+select,
+button {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px;
+  border-radius: 10px;
+  font: inherit;
+}
+
+select {
+  color: var(--text);
+  background: var(--background);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+button {
+  margin-top: 12px;
+  background: var(--green);
+  border: 0;
+  color: #09241b;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #b1f4ce;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.secondary {
+  background: var(--surface-light);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.secondary:hover {
+  background: #245244;
+}
+
+/* STATUS */
+
+.status {
+  margin-top: 16px;
+  padding: 13px;
+  border-radius: 10px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+}
+
+/* STATISTICI */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.stat {
+  min-width: 0;
+  padding: 13px 8px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  color: var(--green);
+  font-size: 19px;
+  overflow-wrap: anywhere;
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* =========================================
+   HARTA LEAFLET - CORECTII IMPORTANTE
+   ========================================= */
+
+.map-panel {
+  min-width: 0;
+}
+
+#map {
+  width: 100%;
+  height: 580px;
+  min-height: 380px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #e4e9e4;
+  isolation: isolate;
+}
+
+/*
+  Nu fortam dimensiunile imaginilor tile.
+  Leaflet trebuie sa le controleze singur.
+*/
+
+.leaflet-container {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e4e9e4;
+}
+
+.leaflet-container .leaflet-tile-pane img {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.leaflet-control-container {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.leaflet-popup-content {
+  color: #182c23;
+}
+
+/* LEGENDA */
+
+.legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.dot {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.route-green {
+  background: #20b56d;
+}
+
+.route-used {
+  background: #3898ed;
+}
+
+.route-start {
+  background: #20c997;
+}
+
+.route-end {
+  background: #eb5757;
+}
+
+.route-public {
+  background: #f5a524;
+}
+
+/* REZULTATE */
+
+.route-card {
+  margin-top: 16px;
+  padding: 15px;
+  border-radius: 12px;
+  background: var(--background);
+  border: 1px solid var(--border);
+}
+
+.route-card strong {
+  color: var(--green);
+}
+
+.route-card p {
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.instructions {
+  max-height: 260px;
+  overflow-y: auto;
+  padding-left: 22px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.instructions li {
+  margin-bottom: 8px;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* COMPARARE TRANSPORT */
+
+.transport-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.transport-card {
+  min-width: 0;
+  padding: 16px;
+  border-radius: 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.transport-card h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+
+.transport-card strong {
+  display: block;
+  color: var(--green);
+  font-size: 20px;
+}
+
+.transport-card p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+/* FOOTER */
+
+footer {
+  padding: 25px 5%;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1050px) {
+  .transport-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 850px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  #map {
+    height: 480px;
+  }
+}
+
+@media (max-width: 520px) {
+  main {
+    padding: 25px 4%;
+  }
+
+  header {
+    padding: 16px 4%;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  #map {
+    height: 400px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .transport-grid {
+    grid-template-columns: 1fr;
+  }
+}
